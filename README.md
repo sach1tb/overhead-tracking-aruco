@@ -1,13 +1,24 @@
 # CVTracking v3.07
 Python scripts for tracking fiducials via overhead mounted cameras using the OpenCV API
 
-References: 
+## References: 
 A lot of the code written has been pulled from or inspired by various amazing resources from great content creators. 
 A few shout outs include:
 Adrian Rosebrock from https://www.pyimagesearch.com.
 OpenCV Team and Contributors for tutorials, demonstrations, and source code.
+QR codes can be generated from here https://github.com/okalachev/arucogen 
+More on ArUco markers https://docs.opencv.org/3.2.0/d5/dae/tutorial_aruco_detection.html
 ...
     
+## How to use:
+0. Use operate_cameras.py to check that all cameras are connected and streaming to the computer
+1. Typically, you must first calibrate the cameras before you start the tracker. The cameras must be calibrated to obtain both intrinsic (e.g. focal length) and extrinsic parameters (e.g. posiion and orientation with respect to a global origin). 
+  a. The intrinsic calibration (camera.py set_calib) consists of a 3x3 camera matrix (read as is from the text file), and 5 distortion coefficients (read as a single line from the text file). See https://docs.opencv.org/3.1.0/d9/d0c/group__calib3d.html on how they are used to calculate the position of a 3D point on the camera image.
+  a. The extrinsic calibration (camera.py set_calib) consists of a 4x4 SE(3) element consisting of the position and orientation of the camera with respect to a global frame. These are obtained using the get_relations.py script which in turn calls the get_global_relations function from the tracker class
+2. To simply run the tracker for an experiment where you don't need information for feedback, use project_tracker.py
+3. If you need information for feedback, then use LT_server.py (live tracker)
+
+## Function definitions
 Camera.py:
 
   Two classes are introduced which help to initialize a usb webcamera and to initialize a webcamera stream. 
